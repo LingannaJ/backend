@@ -26,7 +26,7 @@ pipeline {
 
     }
 
-    stages {
+    stage {
         stage('Install Dependencies') { 
             steps {
                 sh """
