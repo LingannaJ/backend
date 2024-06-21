@@ -10,9 +10,8 @@ pipeline {
             ansiColor('xterm')
     }
     environment{
-        def appVersion = ''
+        def appVersion = '' // variable declaration
     }
-
     stages {
         stage('read the version'){
             steps{
@@ -23,16 +22,14 @@ pipeline {
                 }
             }
         }
-
-        }
-        stage('Install Dependencies') { 
+        stage('Install Dependencies'){ 
             steps {
                 sh """
-                    npm install
-                    ls -ltr
-                    echo "application version : $appVersion"
+                 npm install
+                 ls -ltr
+                 echo "application version : $appVersion"
 
-                    """
+                """
                 }
         }
             
@@ -50,6 +47,6 @@ pipeline {
             echo 'I will run when pipeline is failure'
         }
     }
- 
+}
 
 
