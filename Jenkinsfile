@@ -30,7 +30,7 @@ pipeline {
                  echo "application version : $appVersion"
 
                 """
-                }
+            }
         }
             
     }
