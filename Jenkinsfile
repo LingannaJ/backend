@@ -28,7 +28,6 @@ pipeline {
                  npm install
                  ls -ltr
                  echo "application version : $appVersion"
-
                 """
             }
         }
