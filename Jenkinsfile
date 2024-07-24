@@ -17,8 +17,8 @@ pipeline {
         stage('read the version'){
             steps{
                 script{
-                    def packageJson = readJSON.file 'package.json'
-                    appVersion = packageJson.version 
+                    def packageJSON = readJSON.file 'package.json'
+                    appVersion = packageJSON.version 
                     echo "application version : $appVersion"
                 }
             }
@@ -35,7 +35,7 @@ pipeline {
         stage('Build'){
             steps{
                 sh"""
-                zip -q -r backend-${AppVersion}.zip * -x Jenkinsfile -x backend-${AppVersion}.zip
+                zip -q -r backend-${appVersion}.zip * -x Jenkinsfile -x backend-${appVersion}.zip
                 """
             }
         }
@@ -54,15 +54,27 @@ pipeline {
                         artifacts: [
                             [artifactId: "backend",
                             classifier: '',
-                            file: 'backend-' + "${AppVersion}" + '.zip',
+                            file: 'backend-' + "${appVersion}" + '.zip',
                             type: 'zip']
                         ]
                     )
                 }
             }
         }
-                       
+
+        stage('Deploy'){
+            steps{
+                script{
+                    def params = [ 
+                        string(name: 'appVersion', value: "${appVersion}")
+                    ] 
+                    build job: 'backend-deploy', parameters: params, wait: false 
+
+                }
+            }
+        }                           
     }
+
     post { 
         
         always { 
